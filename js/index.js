@@ -8,7 +8,7 @@ var elMoviesItemTemplate = document.querySelector('#movies-item-template').conte
 var elMoviesListFragment = document.createDocumentFragment();
 
 // Birinchi 100 ta kinoni aylanib chiqamiz
-for (var movie of movies.slice(0, 100)) {
+for (var movie of movies.slice(0, 200)) {
   // Har bir kino uchun qolipdan nusxa olamiz
   var elMovie = elMoviesItemTemplate.cloneNode(true);
 
