@@ -8,19 +8,21 @@ var elMoviesItemTemplate = document.querySelector('#movies-item-template').conte
 var elMoviesListFragment = document.createDocumentFragment();
 
 // Birinchi 100 ta kinoni aylanib chiqamiz
-for (var movie of kinolar.slice(0, 100)) {
+for (var movie of movies.slice(0, 100)) {
   // Har bir kino uchun qolipdan nusxa olamiz
   var elMovie = elMoviesItemTemplate.cloneNode(true);
 
   // Qolipni ma'lumot bilan to'ldiramiz
-  elMovie.querySelector('.movie__title').textContent = movie.title;
-  elMovie.querySelector('.movie__year').textContent = movie.year;
-  elMovie.querySelector('.movie__genres').textContent = movie.genres.join(', ');
-  elMovie.querySelector('.movie__cast').textContent = movie.cast.join(', ');
+  elMovie.querySelector('.movie__img').src = `http://i3.ytimg.com/vi/${movie.ytid}/maxresdefault.jpg`;
+  elMovie.querySelector('.movie__title').textContent = movie.Title;
+  elMovie.querySelector('.movie__rating').textContent = movie.imdb_rating;
+  elMovie.querySelector('.movie__year').textContent = movie.movie_year;
+  elMovie.querySelector('.movie__duration').textContent = Math.floor(movie.runtime / 60) + 'hr' + ' ' + (movie.runtime % 60) + 'min';
+  elMovie.querySelector('.movie__genres').textContent = movie.Categories.split('|').join(', ');
 
   // Tayyor natijani fragmentga solamiz
   elMoviesListFragment.appendChild(elMovie);
 }
 
-// 100 ta kinoni jamlagan fragmentni sahifaga joylaymiz
+// kinolarni jamlagan fragmentni sahifaga joylaymiz
 elMoviesList.appendChild(elMoviesListFragment);

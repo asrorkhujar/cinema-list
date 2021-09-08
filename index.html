@@ -39,26 +39,26 @@
                           <span>
                             <svg class="img-fluid" xmlns="http://www.w3.org/2000/svg" height="24" width="24"><g fill="none"><path d="M0 0h24v24H0V0z"/><path d="M0 0h24v24H0V0z"/></g><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z" fill="#888"/></svg>
                           </span>
-                          <span class="movie__rating"></span>
+                          <span class="modal__movie-rating"></span>
                         </div>
                         <div class="mb-1 d-flex align-items-center">
                           <span>
                             <svg class="img-fluid" xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M7 11h2v2H7v-2zm14-5v14c0 1.1-.9 2-2 2H5a2 2 0 01-2-2l.01-14c0-1.1.88-2 1.99-2h1V2h2v2h8V2h2v2h1c1.1 0 2 .9 2 2zM5 8h14V6H5v2zm14 12V10H5v10h14zm-4-7h2v-2h-2v2zm-4 0h2v-2h-2v2z" fill="#888"/></svg></span>
-                            <span class="movie__year"></span>
+                            <span class="modal__movie-year"></span>
                           </div>
                           <div class="mb-1 d-flex align-items-center">
                             <span>
                               <svg class="img-fluid" xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" fill="#888"/></svg></span>
-                              <span class="movie__duration"></span>
+                              <span class="modal__movie-duration"></span>
                             </div>
                           </div>
 
                           <div class="d-flex align-items-center my-3">
-                            <div class="movie__genre"></div>
+                            <div class="modal__movie-genres"></div>
                           </div>
-                          <p class="movie__summary">
+                          <p class="modal__movie-summary">
                           </p>
-                          <a class="btn btn-small btn-success" href="" target="_blank">Show on IMDb</a>
+                          <a class="modal__btn-imdb btn btn-small btn-success" href="" target="_blank">Show on IMDb</a>
                         </div>
                       </div>
                     </div>
@@ -68,10 +68,10 @@
 
               <!-- TEMPLATE -->
               <template id="movies-item-template">
-                <div class="movie col-sm-6 col-md-4 col-xl-3 mb-4">
+                <div class="movie col-sm-6 col-md-6 col-xl-3 mb-4">
                   <div class="card h-100">
                     <div class="p-1">
-                      <img class="movie__img img-fluid" src="" alt="" width="300" height="169">
+                      <img class="movie__img w-100" src="" alt="" width="100%" height="170">
                     </div>
                     <div class="card-body">
 
@@ -99,7 +99,7 @@
                           </div>
 
                           <div class="d-flex align-items-center my-3">
-                            <div class="movie__genre"></div>
+                            <div class="movie__genres"></div>
                           </div>
 
                           <button class="btn btn-smal btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#movieModal">
