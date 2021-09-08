@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Delegation</title>
+  <link rel="stylesheet" href="css/bootstrap5.min.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>Event delegation</h1>
+
+    <button class="btn btn-success js-add-test-button-button" type="button">Add button</button>
+
+    <div class="buttons d-flex justify-content-center">
+      <button class="btn btn-primary mx-3 js-test-button" type="button" data-birnima="0">Button</button>
+      <button class="btn btn-primary mx-3 js-test-button" type="button" data-birnima="1">Button</button>
+      <button class="btn btn-primary mx-3 js-test-button" type="button" data-birnima="2">Button</button>
+    </div>
+
+
+    <div class="cars"></div>
+  </div>
+
+  <script>
+    var elsTestButton = document.querySelectorAll('.js-test-button');
+    var elButtons = document.querySelector('.buttons');
+    var elAddTestButtonButton = document.querySelector('.js-add-test-button-button');
+
+    if (elAddTestButtonButton) {
+      elAddTestButtonButton.addEventListener('click', function () {
+        var elNewButton = document.createElement('button');
+        elNewButton.type = 'button';
+        elNewButton.classList.add('btn', 'btn-primary', 'mx-3', 'js-test-button');
+        elNewButton.textContent = 'Yangi button';
+
+        elButtons.appendChild(elNewButton);
+      });
+    }
+
+
+    elButtons.addEventListener('click', function (evt) {
+      if (evt.target.matches('.js-test-button')) {
+        alert('Iiii, bosvoldiz');
+        console.dir(evt.target);
+        console.dir(evt.target.dataset.birnima);
+      }
+    });
+
+    /* if (elsTestButton.length > 0) {
+      elsTestButton.forEach(function (elButton) {
+        elButton.addEventListener('click', function () {
+          alert('Iiii, bosvoldiz');
+        });
+      });
+    } */
+  </script>
+
+
+  <script>
+    var cars = ['Dodge', 'Mersedes', 'Porsche', 'BMW', 'Matiz', 'Ferrari', 'Mustang', 'Audi'];
+
+    var elCars = document.querySelector('.cars');
+
+    cars.forEach(function (car, index) {
+      var elCarButton = document.createElement('button');
+      elCarButton.textContent = car;
+      elCarButton.dataset.tartipRaqam = index;
+
+      elCars.appendChild(elCarButton);
+
+      // console.log(`${index}: ${car}`);
+    });
+  </script>
+</body>
+</html>
