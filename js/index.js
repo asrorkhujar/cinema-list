@@ -1,48 +1,103 @@
-// Kinolar joylanadigan idish
-var elMoviesList = document.querySelector('.movies-list');
+const elSearchForm = document.querySelector('.js-form-search');
+const elSearchName = elSearchForm.querySelector ('.js-form-search-name');
 
-// Har bir kinoning HTML qolipi
-var elMoviesItemTemplate = document.querySelector('#movies-item-template').content;
+//Kinolar joylanadigan list
+const elMoviesList = document.querySelector('.movies__list');
 
-// Kinolarni HTMLga aylantirib vaqtincha yig'ib turish uchun fragment
-var elMoviesListFragment = document.createDocumentFragment();
+//Template kinoni HTML qolipi
+const elMoviesItemTemplate = document.querySelector('#movies-item-template').content;
 
-// Birinchi 200 ta kinoni aylanib chiqamiz
-for (var movie of movies.slice(0, 100)) {
-  // Har bir kino uchun qolipdan nusxa olamiz
-  var elMovie = elMoviesItemTemplate.cloneNode(true);
+//Modaldagi elementlarni topib olamiz
+// MODAL
+const elMovieInfoModal = document.querySelector('.movie-info-modal');
+const elMovieInfoModalTitle = elMovieInfoModal.querySelector('.movie-info-modal__title');
+const elMovieInfoModalRating = elMovieInfoModal.querySelector('.movie-info-modal__rating');
+const elMovieInfoModalYear = elMovieInfoModal.querySelector('.movie-info-modal__year');
+const elMovieInfoModalDuration = elMovieInfoModal.querySelector('.movie-info-modal__duration');
+const elMovieInfoModalIFrame = elMovieInfoModal.querySelector('.movie-info-modal__iframe');
+const elMovieInfoModalCategories = elMovieInfoModal.querySelector('.movie-info-modal__categories');
+const elMovieInfoModalSummary = elMovieInfoModal.querySelector('.movie-info-modal__summary');
+const elMovieInfoModalImdbLink = elMovieInfoModal.querySelector('.movie-info-modal__imdb-link');
 
-  // Qolipni ma'lumot bilan to'ldiramiz
-  elMovie.querySelector('.movie__img').src = `http://i3.ytimg.com/vi/${movie.ytid}/maxresdefault.jpg`;
-  elMovie.querySelector('.movie__title').textContent = movie.Title;
-  elMovie.querySelector('.movie__rating').textContent = movie.imdb_rating;
-  elMovie.querySelector('.movie__year').textContent = movie.movie_year;
-  elMovie.querySelector('.movie__duration').textContent = Math.floor(movie.runtime / 60) + 'hr' + ' ' + (movie.runtime % 60) + 'min';
-  elMovie.querySelector('.movie__genres').textContent = movie.Categories.split('|').join(', ');
-
-  // Tayyor natijani fragmentga solamiz
-  elMoviesListFragment.appendChild(elMovie);
+//Toliq daqiqani soat va daqiqaga ajratib beruvchi funksiya
+function getHoursStringFromMinutes (minutes) {
+  return `${Math.floor(minutes / 60)} hrs ${minutes % 60} mins`;
 }
 
-// kinolarni jamlagan fragmentni sahifaga joylaymiz
-elMoviesList.appendChild(elMoviesListFragment);
+//Kinolar listini ko'rsatish un funksiya
+function showMovies (movies) {
 
+  //HTMLni bo'shatamiz
+  elMoviesList.innerHTML = '';
 
+  //Kinolarni HTMLga aylantirib, vaqtincha yig'ib turish un fragment
+  const elMoviesFragment = document.createDocumentFragment();
 
-// Modal info
-var elMovieModal = document.querySelector('#movieModal');
-var elMovieMoreButton = document.querySelectorAll('.movie__more-btn');
+  //Birinchi 50ta kinoni aylanib chiqamiz
+  for (const movie of movies.slice(0, 100)) {
 
-elMovieMoreButton.forEach(btn => {
-  btn.addEventListener('click', () => {
-    var movie = movies[Number(btn.dataset.index)];
-    elMovieModal.querySelector('.modal__movie-title').textContent = movie.Title;
-      elMovieModal.querySelector('.modal__movie-rating').textContent = movie.imdb_rating;
-      elMovieModal.querySelector('.modal__movie-year').textContent = movie.movie_year;
-      elMovieModal.querySelector('.modal__movie-duration').textContent = Math.floor(movie.runtime / 60) + 'hr' + ' ' + (movie.runtime % 60) + 'min';
-      elMovie.querySelector('.modal__movie-genres').textContent = movie.Categories.split('|').join(', ');
-      elMovieModal.querySelector('.modal__iframe').src = `https://www.youtube.com/embed/${movie.ytid}`;
-      elMovieModal.querySelector('.modal__movie-summary').textContent = movie.summary;
-      elMovieModal.querySelector('.modal__btn-imdb').href = `https://www.imdb.com/title/${movie.imdb_id}`;
-  })
-})
+    //Har bir kino un qolipdan nusxa olamiz
+    const elNewMoviesItem = elMoviesItemTemplate.cloneNode(true);
+
+    //Qolipni ma'lumot bn toldiramiz
+    elNewMoviesItem.querySelector('.movie__img').src = movie.youtubePoster;
+    elNewMoviesItem.querySelector('.movie__img').alt = `${movie.title} poster`;
+    elNewMoviesItem.querySelector('.movie__title').textContent = movie.title;
+    elNewMoviesItem.querySelector('.movie__rating').textContent = movie.imdbRating;
+    elNewMoviesItem.querySelector('.movie__year').textContent = movie.year;
+    elNewMoviesItem.querySelector('.movie__duration').textContent = getHoursStringFromMinutes(movie.runtime);
+    elNewMoviesItem.querySelector('.movie__categories').textContent = movie.categories.join(', ');
+    elNewMoviesItem.querySelector('.js-more-info-button').dataset.imdbId = movie.imdbId;
+
+    //Tayyot natijani fragmentga solamiz
+    elMoviesFragment.appendChild(elNewMoviesItem);
+  }
+
+  //Kinolar jamlangan fragmentni sahifaga joylaymiz
+  elMoviesList.appendChild(elMoviesFragment);
+}
+
+//More info button bosilganda Modaldagi infolarni yangilash funksiya
+function updateMovieInfoModal (imdbId) {
+  const movie = movies.find(movie => movie.imdbId === imdbId);
+
+//Modalni ma'lumot bn toldiramiz
+  elMovieInfoModalTitle.textContent = movie.title;
+  elMovieInfoModalRating.textContent = movie.imdbRating;
+  elMovieInfoModalYear.textContent = movie.year;
+  elMovieInfoModalDuration.textContent = getHoursStringFromMinutes(movie.runtime);
+  elMovieInfoModalIFrame.src = `https://www.youtube-nocookie.com/embed/${movie.youtubeId}`;
+  elMovieInfoModalCategories.textContent = movie.categories.join(', ');
+  elMovieInfoModalSummary.textContent = movie.summary;
+  elMovieInfoModalImdbLink.href = `https://www.imdb.com/title/${movie.imdbId}`;
+}
+
+//IMDB linki bosilganda ushanga tegishli IMDB saytga target blank qilish
+elMoviesList.addEventListener('click', evt => {
+  if (evt.target.matches('.js-more-info-button')) {
+    updateMovieInfoModal(evt.target.dataset.imdbId);
+  }
+});
+
+//Modal yopilganda youtubedagi video bo'shatiladi
+elMovieInfoModal.addEventListener('hidden.bs.modal', () => {
+  elMovieInfoModalIFrame.src = '';
+});
+
+if (elSearchForm) {
+  elSearchForm.addEventListener('submit', evt => {
+    evt.preventDefault();
+
+    const titleRegex = new RegExp(elSearchName.value, 'gi');
+
+    const foundMovies = movies.filter(movie => movie.title.match(titleRegex));
+
+    if (foundMovies.length > 0) {
+      showMovies(foundMovies);
+    } else {
+      elMoviesList.innerHTML = 'Film no found';
+    }
+  });
+}
+
+showMovies (movies.slice(0, 100));
