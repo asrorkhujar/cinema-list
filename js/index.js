@@ -1,6 +1,11 @@
 const elSearchForm = document.querySelector('.js-form-search');
 const elSearchName = elSearchForm.querySelector ('.js-form-search-name');
 
+const elFilterCategories = elSearchForm.categories;
+const elFilterYearFrom = elSearchForm.from_year;
+const elFilterYearTo = elSearchForm.to_year;
+const elFilterRating = elSearchForm.rating;
+
 //Kinolar joylanadigan list
 const elMoviesList = document.querySelector('.movies__list');
 
@@ -84,13 +89,23 @@ elMovieInfoModal.addEventListener('hidden.bs.modal', () => {
   elMovieInfoModalIFrame.src = '';
 });
 
+
+// FORM - FILTERS
+
 if (elSearchForm) {
   elSearchForm.addEventListener('submit', evt => {
     evt.preventDefault();
 
     const titleRegex = new RegExp(elSearchName.value, 'gi');
 
-    const foundMovies = movies.filter(movie => movie.title.match(titleRegex));
+    const foundMovies = movies.filter(movie => {
+      return (
+        (movie.title.match(titleRegex)) &&
+        (elFilterCategories.value.includes('all') || movie.categories.includes(elFilterCategories.value)) &&
+        (movie.year >= (Number(elFilterYearFrom.value) || 1900) && movie.year <= (Number(elFilterYearTo.value) || 2020)) &&
+        (movie.imdbRating >= Number(elFilterRating.value))
+    );
+      });
 
     if (foundMovies.length > 0) {
       showMovies(foundMovies);

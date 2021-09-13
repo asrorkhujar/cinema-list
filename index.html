@@ -19,24 +19,36 @@
       <h1 class="mb-5 display-5 text-white fw-bold text-center">Movies</h1>
       <form class="movies__form js-form-search row" action="https://echo.htmlacademy.ru" method="GET">
         <div class="mb-3 col-md-2">
-          <select class="form-select" aria-label="Default select example">
+          <select class="form-select" aria-label="categories" name="genre_categories">
             <option selected>All</option>
-            <option value="1"></option>
-            <option value="2"></option>
-            <option value="3"></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
           </select>
         </div>
-        <div class="mb-3 col-md-5">
-          <input class="form-control js-form-search-name" type="text" id="moviesSearch" aria-describedby="moviesSearch" placeholder="Movies search..." aria-label="Movies search">
+        <div class="mb-3 col-md-3">
+          <input class="form-control js-form-search-name" type="text" id="moviesSearch" name="movies_search" aria-describedby="moviesSearch" placeholder="Movies search..." aria-label="Movies search">
+        </div>
+        <div class="mb-3 col-md-2">
+          <input class="form-control" type="number" min="1900" max="2020" name="from_year" id="yearInputFirst" placeholder="Year - From">
+        </div>
+        <div class="mb-3 col-md-2">
+          <input class="form-control" type="number" min="1900" max="2020" name="to_year" id="yearInputSecond" placeholder="Year - To">
         </div>
         <div class="mb-3 col-md-1">
-          <input class="form-control"type="number" id="yearInputFirst" placeholder="Year..">
-        </div>
-        <div class="mb-3 col-md-1">
-          <input class="form-control"type="number" id="yearInputSecond" placeholder="Year..">
-        </div>
-        <div class="mb-3 col-md-1">
-          <input class="form-control"type="number" id="ratingInput" placeholder="Rating">
+          <input class="form-control" type="number" min="0" max="10" step="0.1" id="ratingInput" name="rating" placeholder="IMDb rating" aria-label="IMDb rating">
         </div>
         <div class="col-md-2">
           <button class="form-search-btn btn btn-outline-info text-white" type="submit">OK</button>
